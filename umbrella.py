@@ -63,4 +63,4 @@ def keygen(psize):
         if g == 1:
             break
     sk = number.inverse(pk, t)
-    return sk, pk, n, t, p, q
+    return sk, pk, n
