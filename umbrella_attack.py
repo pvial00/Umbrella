@@ -80,20 +80,20 @@ def keygen(psize):
 
 text = "A"
 msg = number.bytes_to_long(text)
-print msg
+print(msg)
 sk, pk, mod, t, p, q =  keygen(8)
-print sk, pk, mod
+print(sk, pk, mod)
 ctxt = encrypt(msg, pk, mod)
-print ctxt
+print(ctxt)
 ptxt = decrypt(ctxt, sk, mod)
-print ptxt
+print(ptxt)
 if ptxt != msg:
-    print "Key is broken"
+    print("Key is broken")
     exit(1)
 
 import math
 crack = int(math.sqrt(math.sqrt(mod)))
-print "crack", crack
+print("crack", crack)
 
 primes = []
 ceiling = 500000
@@ -114,105 +114,105 @@ for i in range(start, ceiling, inc):
     except ZeroDivisionError as zer:
         pass
 
-print primes
-print "Modulus sanity check"
+print(primes)
+print("Modulus sanity check")
 sk2 = number.inverse(pk, mod)
-print sk2
+print(sk2)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     exit(0)
-print "Modulus - 1 sanity check"
+print("Modulus - 1 sanity check")
 sk2 = number.inverse(pk, (mod - 1))
-print sk2
+print(sk2)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     exit(0)
-print "mod mod P"
-print mod % p
-print "mod mod Q"
-print mod % q
-print "mod mod T"
-print mod % t
-print "Solve with P and Q but the question is how to identify P and Q"
+print("mod mod P")
+print(mod % p)
+print("mod mod Q")
+print(mod % q)
+print("mod mod T")
+print(mod % t)
+print("Solve with P and Q but the question is how to identify P and Q")
 ps = ((p - 1) * (q - 1))
 sk2 = number.inverse(pk, ps)
-print sk2
-print decrypt(ctxt, sk2, mod)
-print "p, q"
-print p, q
-print primes
-print "This should always decrypt"
+print(sk2)
+print(decrypt(ctxt, sk2, mod))
+print("p, q")
+print(p, q)
+print(primes)
+print("This should always decrypt")
 sk2 = number.inverse(pk, t)
-print sk2
-print decrypt(ctxt, sk2, mod)
+print(sk2)
+print(decrypt(ctxt, sk2, mod))
 
 
-print "Crack from primes"
+print("Crack from primes")
 #if primes[len(primes)-1] == mod:
 #for i in range(5):
 #    primes.pop()
 p2 = primes.pop()
 q2 = primes.pop()  -1
-print p2, q2
+print(p2, q2)
 #exit(0)
 s = ((p2 - 1) * (q2 - 1))
 sk2 = number.inverse(pk, s)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     exit(0)
-print "Solve with P and Q but the question is how to identify P and Q"
+print("Solve with P and Q but the question is how to identify P and Q")
 ps = ((p - 1) * (q - 1))
 sk2 = number.inverse(pk, ps)
-print sk2
-print decrypt(ctxt, sk2, mod)
-print "p, q"
-print p, q
-print primes
-print "This should always decrypt"
+print(sk2)
+print(decrypt(ctxt, sk2, mod))
+print("p, q")
+print(p, q)
+print(primes)
+print("This should always decrypt")
 sk2 = number.inverse(pk, t)
-print sk2
-print decrypt(ctxt, sk2, mod)
+print(sk2)
+print(decrypt(ctxt, sk2, mod))
 
 
-print "Crack with P"
+print("Crack with P")
 sk2 = number.inverse(pk, (p-1))
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     #exit(0)
-print "Crack with Q"
+print("Crack with Q")
 sk2 = number.inverse(pk, (q-1))
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     #exit(0)
-print "Reddit santiy check"
+print("Reddit santiy check")
 s = ((mod) * 2) 
 #s = (((p - 1) * mod) * ((q - 1) * mod))
 sk2 = number.inverse(pk, s)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     #exit(0)
-print "Check 2"
+print("Check 2")
 p2 = 2
 q2 = mod / p2
 s = ((p2 - 1) * (q2 - 1))
-print s
+print(s)
 sk2 = number.inverse(pk, s)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     exit(0)
-print "Cracking with Fermat"
+print("Cracking with Fermat")
 p2 = fermat(mod)
 q2 = mod / p2
 t = ((p2 - 1) * (q2 - 1))
 sk2 = number.inverse(pk, t)
 tmp = decrypt(ctxt, sk2, mod)
 if tmp == msg:
-    print "Cracked", tmp
+    print("Cracked", tmp)
     #exit(0)
